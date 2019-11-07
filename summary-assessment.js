@@ -60,6 +60,12 @@ function each(coll, f) {
   
   function wordLengths(str) {
       // TODO: your code here 
+      //we split the string using the space as separator an we ireate over the array of words and for each word we count its 
+      //length
+      var words = str.split(" ")
+      var charArray map(words, function(word) {
+      	return word.length;
+      })
   }
   
   //=============================================================================
@@ -72,7 +78,13 @@ function each(coll, f) {
   // countOccurrences("hello, world!", "l"); // 3
   
   function countOccurrences(string, character) {
+
       // your code is here
+      // we convert the string into array of characters and we iterate over the array using the function 
+      //filter
+      return filter(string.split(""),function(item) {
+      	 return item ===character
+      }).length;
   }
   
   //=============================================================================
@@ -84,7 +96,9 @@ function each(coll, f) {
   // wordsLongerThanThree("Hello Mad World") //["Hello", "World"]
   
   function wordsLongerThanThree(str) {
-      // TODO: your code here 
+      return filter(str.split(" "), function(word) {
+      	return word.length > 3;
+      })
   }
   
   //=============================================================================
@@ -99,7 +113,10 @@ function each(coll, f) {
   //repeatString('dog', 3); // => 'dog' + 'dog' + 'dog' => 'dogdogdog'
   
   function repeatString(str, count) { 
-   // TODO: your code here 
+   if(count === 0) {
+   	return ''
+   }
+   return str + repeatString(str, count-1)
   } 
    
   
@@ -128,7 +145,39 @@ function each(coll, f) {
   // pizza.eatSlice();
   // pizza.eatSlice();
   
-  // Write your code here .....
+  // Write your code here ....
+  function makePizza(crust, size, numberOfSlice) {
+
+  	var crust = crust;
+  	var size = size;
+  	var numberOfSlice = numberOfSlice;
+  	var ingredients = [];
+
+  	return {
+  		addIngredients: function(ingredient) {
+  			ingredients.push(ingredient)
+  		},
+  		displayIngredients: function() {
+  			 return "The ingredients are: " + ingredients.join(',');
+  		},
+  		bakePizza: function() {
+  		 setTimeout(function() {
+  				console.log( 'Your ' + crust + ' ' + size + ' ' + numberOfSlice +' slice pizza is done') 
+  			},2000)
+  		},
+  		eatSlice: function() {
+  			if(numberOfSlice > 0) {
+  				numberOfSlice =numberOfSlice - 1
+
+  				return "Here you are"
+  			}
+  			else
+  			return "Sorry, you can't"
+  		}
+  	
+
+  }
+}
   
   //=============================================================================
   /*                                  Q6                                      */
@@ -153,8 +202,33 @@ function each(coll, f) {
   */
   
   // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
-  
+  //Yes I am
   // Write your code here .....
+  function ReadingList() {
+  	var readingList= {};
+  	readingList.read = 0;
+  	readingList.unRead = 0;
+  	readingList.toRead = [];
+  	readingList.currentRead = "";
+  	readingList.readBooks = [];
+  	readingList.AddBook = AddBook;
+  	readingList.finishCurrentBook = finishCurrentBook;
+  	return 
+  }
+  var AddBook = function(bookName) {
+  	this.toRead.push(bookName);
+  	this.unRead =this.unread + 1;
+
+  }
+  var finishCurrentBook = function() {
+
+  	this.readBooks.push(this.currentRead);
+  	this.read = this.read + 1;
+  	this.currentRead = this.toRead[0];
+  	this.unRead = this.unRead - 1;
+
+  }
+
   
   //=============================================================================
   /*                                  Q7                                       */
@@ -175,6 +249,40 @@ function each(coll, f) {
   //  safe('money','small') => "watch gold-bar money"
   
   // Write your code here .....
+  function makeSafe(storageSize) {
+  	var size=storageSize;
+  	var items =[];
+  	return function(item,itemSize) {
+  		if(itemSize ==='small') {
+  				if(size >= 1) {
+  					size -= 1
+  					items.push(item)
+  				}else{
+  					return "can't fit"
+  				}
+  			}
+  				else if(itemSize === 'meduim') {
+  					if(size >= 2) {
+  					size -= 2
+  					items.push(item)
+  				}else{
+  					return "can't fit"
+  				}
+  			}
+  				else if(itemSize === 'big') {
+  					if(size >= 3) {
+  					size -= 3
+  					items.push(item)
+  				}else{
+  					return "can't fit"
+  				}
+  		}
+  		if(size === 0) {
+  		return items.join(" ")
+  	}
+  	}
+
+  }
   
   //=============================================================================
   /*                                  Q8                                       */
@@ -216,10 +324,12 @@ function each(coll, f) {
   //================================================================================
   // Theoretical questions.
   // 1- In your own words,Why do we use Closures ?
-  
+  //we use closures to protect our data .all variqbles are accessed only inside the function 
   // 2- In OOP, what does "this" refer to ?
-  
+  //'this refers to the object whare the function is executed'
   // 3- What is jQuery?
-  
+  // jQuery is a library built with javascript that contains methods useful to simplify the code
+  // 
   // 4- what is the diffrence between Closure's methods and The OOP's methods?
-  
+  //Closure's methods are private to the function itself
+  // OOP's methods can be used to create other instances
